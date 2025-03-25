@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MainMenuUI : MonoBehaviour
@@ -42,7 +43,7 @@ public class MainMenuUI : MonoBehaviour
     private void StartGame()
     {
         Debug.Log("Start Game!");
-        // Load scene game (ví d?: SceneManager.LoadScene("GameScene");)
+        SceneManager.LoadScene(0);
     }
 
     private void OpenSettings()

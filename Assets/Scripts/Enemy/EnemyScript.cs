@@ -20,6 +20,10 @@ public class EnemyScript : MonoBehaviour
     {
         //thanh mau
         currentHealth = maxHealth;
+        if (healthSlider == null)
+        {
+            healthSlider = GetComponentInChildren<Slider>();
+        }
         healthSlider.maxValue = maxHealth;
         healthSlider.value = maxHealth;
 

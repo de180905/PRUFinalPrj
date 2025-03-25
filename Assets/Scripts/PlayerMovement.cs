@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnFire(InputValue value)
     {
+        Debug.Log("Fire");
         if (!isAlive) { return; }
         Instantiate(bullet, gun.position, transform.rotation);
     }
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        Debug.Log("Jumping");
         if (!isAlive) { return; }
         if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return;}
         

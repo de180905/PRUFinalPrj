@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 246ffa96b6d9e774695f796bd88bcd61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
+  healthSlider: {fileID: 0}
   detectionRange: 10
   moveRight: 1
   speed: 1
@@ -144,6 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c700aa55817e61642ab4e4d851ae13da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
+  healthSlider: {fileID: 5673004502699043952}
   detectionRange: 5
   moveRight: 1
   speed: 1
@@ -291,6 +295,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0aca0c72e7c34e648ad98d41325e2ffb, type: 3}
+--- !u!114 &5673004502699043952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2492857163461315470, guid: 0aca0c72e7c34e648ad98d41325e2ffb, type: 3}
+  m_PrefabInstance: {fileID: 7792045289853364222}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7830451237697804875 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 38770987382734261, guid: 0aca0c72e7c34e648ad98d41325e2ffb, type: 3}
