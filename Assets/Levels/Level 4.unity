@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 49082145}
   - component: {fileID: 49082144}
   - component: {fileID: 49082143}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: Hazards Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1469,7 +1469,7 @@ GameObject:
   - component: {fileID: 387957478}
   - component: {fileID: 387957480}
   - component: {fileID: 387957479}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Water Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

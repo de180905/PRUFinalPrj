@@ -57,11 +57,23 @@ public class GameSession : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
         livesText.text = playerLives.ToString();
     }
-
+    public void SaveScore(int score)
+    {
+        // Save last score
+        PlayerPrefs.SetInt("LastScore", score);
+        // Save highest score if the new score is greater
+        if (score > PlayerPrefs.GetInt("HighestScore", 0))
+        {
+            PlayerPrefs.SetInt("HighestScore", score);
+        }
+        // Save changes
+        PlayerPrefs.Save();
+    }
     void ResetGameSession()
     {
         FindObjectOfType<ScenePersist>().ResetScenePersist();
-        SceneManager.LoadScene(0);
+        SaveScore(score);
+        SceneManager.LoadScene("Start");
         Destroy(gameObject);
     }
 }

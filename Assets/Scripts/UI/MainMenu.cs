@@ -12,7 +12,8 @@ public class MainMenuUI : MonoBehaviour
     private VisualElement settingsPanel;
     private Slider volumeSlider;
     private Label volumeLabel;
-
+    private Label lastScoreLabel;
+    private Label highestScoreLabel;
     void Awake()
     {
         uiDocument = GetComponent<UIDocument>();
@@ -29,7 +30,8 @@ public class MainMenuUI : MonoBehaviour
 
         volumeSlider = root.Q<Slider>("volume-slider");
         volumeLabel = root.Q<Label>("volume-label");
-
+        lastScoreLabel = root.Q<Label>("last-score-label");
+        highestScoreLabel = root.Q<Label>("highest-score-label");
         // Gán s? ki?n cho các nút
         startButton.clicked += StartGame;
         settingsButton.clicked += OpenSettings;
@@ -38,6 +40,7 @@ public class MainMenuUI : MonoBehaviour
 
         // S? ki?n thay ??i âm l??ng
         volumeSlider.RegisterValueChangedCallback(evt => ChangeVolume(evt.newValue));
+        LoadAndDisplayScores();
     }
 
     private void StartGame()
@@ -69,5 +72,13 @@ public class MainMenuUI : MonoBehaviour
         int volumePercent = Mathf.RoundToInt(value * 100);
         volumeLabel.text = $"Volume: {volumePercent}%";
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20); // Chuy?n ??i giá tr? thành dB
+    }
+    private void LoadAndDisplayScores()
+    {
+        int lastScore = PlayerPrefs.GetInt("LastScore", 0);
+        int highestScore = PlayerPrefs.GetInt("HighestScore", 0);
+
+        lastScoreLabel.text = $"Last Score: {lastScore}";
+        highestScoreLabel.text = $"Highest Score: {highestScore}";
     }
 }
