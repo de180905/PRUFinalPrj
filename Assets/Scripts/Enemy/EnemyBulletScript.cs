@@ -2,26 +2,52 @@
 
 public class EnemyBulletScript : MonoBehaviour
 {
-    public GameObject player;
+    [SerializeField] float bulletSpeed = 10f;
+    [SerializeField] float maxDistance = 10f;
+    [SerializeField] float damage = 10f; // Sát thương của đạn
+
     private Rigidbody2D rb;
-    public float force = 5;
-    private void Start()
+    private Vector2 startPosition;
+    private float xSpeed;
+    private bool moveRight; // Hướng di chuyển của đạn
+
+    // Phương thức khởi tạo để xác định hướng bắn
+    public void Initialize(float direction)
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        Vector3 direction = player.transform.position - transform.position;
-        rb.linearVelocity = new Vector2 (direction.x, direction.y).normalized * force;
-        float rot = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, rot-90);
+        startPosition = transform.position;
+        moveRight = direction > 0; // Hướng dựa trên localScale.x của enemy
+        xSpeed = bulletSpeed * (moveRight ? 1 : -1);
+
+        rb.freezeRotation = true; // Khóa xoay
+        transform.rotation = Quaternion.identity; // Đặt rotation về 0
     }
-    // Update is called once per frame
+
     void Update()
     {
-        
+        // Di chuyển đạn theo trục x
+        rb.linearVelocity = new Vector2(xSpeed, 0f);
+
+        // Kiểm tra khoảng cách tối đa
+        float distanceTraveled = Vector2.Distance(startPosition, transform.position);
+        if (distanceTraveled >= maxDistance)
+        {
+            gameObject.SetActive(false);
+        }
     }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Hủy đạn khi va chạm với bất kỳ thứ gì
-        Destroy(gameObject);
+        if (collision.CompareTag("Player"))
+        {
+            // Gây sát thương cho player
+            HealthSystem healthSystem = collision.GetComponent<HealthSystem>();
+            if (healthSystem != null)
+            {
+                healthSystem.TakeDamage(damage);
+            }
+        }
+        // Làm đạn biến mất khi va chạm với bất kỳ thứ gì
+        gameObject.SetActive(false);
     }
 }

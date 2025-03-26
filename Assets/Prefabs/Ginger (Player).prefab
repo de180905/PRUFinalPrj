@@ -272,7 +272,7 @@ MonoBehaviour:
   jumpSpeed: 15
   climbSpeed: 5
   deathKick: {x: 10, y: 10}
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 9161722927733169467, guid: 57a24c7dafbe3dc4085d75a2bc7c642a, type: 3}
   gun: {fileID: 6117309012360519353}
 --- !u!1001 &2875487009336879988
 PrefabInstance:

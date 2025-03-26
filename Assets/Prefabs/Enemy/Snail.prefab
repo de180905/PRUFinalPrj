@@ -13,12 +13,14 @@ GameObject:
   - component: {fileID: 4995215384743921731}
   - component: {fileID: 9077391442212935791}
   - component: {fileID: 7046438466164088409}
-  - component: {fileID: 883461356814995883}
-  - component: {fileID: -783906781882488534}
   - component: {fileID: -3812335176034874659}
+  - component: {fileID: 2333978332540391066}
+  - component: {fileID: 8486485340027679131}
+  - component: {fileID: 1590891926821039329}
+  - component: {fileID: 8156798632904668696}
   m_Layer: 0
   m_Name: Snail
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -189,41 +191,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.35075223, y: 0.25544074}
   m_EdgeRadius: 0
---- !u!114 &883461356814995883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927816802833574180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f34b27c7db352d40aedd2e5980312f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 5
-  healthSlider: {fileID: 8879375189506277547}
-  detectionRange: 5
-  moveRight: 1
-  speed: 1
-  travelDistance: 1
---- !u!114 &-783906781882488534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927816802833574180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56c98618e6a25084e9dfbc6f0da93e6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 5
-  healthSlider: {fileID: 8879375189506277547}
-  detectionRange: 5
-  moveRight: 1
-  speed: 1
 --- !u!114 &-3812335176034874659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,10 +204,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
+  damagePerBullet: 25
+  damageOnPlayerCollision: 1
   healthSlider: {fileID: 8879375189506277547}
   detectionRange: 5
   moveRight: 1
   speed: 1
+--- !u!114 &2333978332540391066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927816802833574180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542a080a9a3209540b23fbd3145d86bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthSlider: {fileID: 8879375189506277547}
+--- !u!114 &8486485340027679131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927816802833574180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e895ee0ba9fba48a9b623d6de3761f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  detectionRange: 5
+--- !u!114 &1590891926821039329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927816802833574180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21aac078b28ac564dadde4aa0b0796d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  travelDistance: 0.5
+--- !u!114 &8156798632904668696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927816802833574180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba96e420247b02943b695a2387d4f738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6458593773903809317
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     CapsuleCollider2D myBodyCollider;
     BoxCollider2D myFeetCollider;
     float gravityScaleAtStart;
-
     bool isAlive = true;
     GameObject currentBullet;
 
@@ -29,6 +28,11 @@ public class PlayerMovement : MonoBehaviour
         myBodyCollider = GetComponent<CapsuleCollider2D>();
         myFeetCollider = GetComponent<BoxCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
+
+        if (gun == null)
+        {
+            Debug.LogError("Gun Transform is not assigned in PlayerMovement!");
+        }
     }
 
     void Update()
@@ -50,8 +54,26 @@ public class PlayerMovement : MonoBehaviour
             currentBullet.SetActive(false);
         }
 
-        currentBullet = Instantiate(bulletPrefab, gun.position, transform.rotation);
-        currentBullet.SetActive(true);
+        if (gun != null)
+        {
+            currentBullet = Instantiate(bulletPrefab, gun.position, Quaternion.identity);
+            currentBullet.SetActive(true);
+
+            float direction = transform.localScale.x;
+            Bullet bulletScript = currentBullet.GetComponent<Bullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.Initialize(direction);
+            }
+            else
+            {
+                Debug.LogError("Bullet script not found on instantiated bullet!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Cannot shoot: Gun Transform is not assigned!");
+        }
     }
 
     void OnMove(InputValue value)
