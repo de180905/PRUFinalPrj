@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShootingBehavior : MonoBehaviour
 {
@@ -13,14 +13,26 @@ public class ShootingBehavior : MonoBehaviour
     {
         enemyMovement = GetComponent<EnemyMovement>();
         timer = 0f;
+
+        if (bulletPot == null)
+        {
+            Debug.LogError($"Bullet Pot is not assigned in ShootingBehavior on {gameObject.name}!");
+        }
+        if (bulletPrefab == null)
+        {
+            Debug.LogError($"Bullet Prefab is not assigned in ShootingBehavior on {gameObject.name}!");
+        }
     }
 
     public void ShootIfDetected()
     {
-        if (enemyMovement == null) return;
+        if (enemyMovement == null)
+        {
+            Debug.LogWarning($"EnemyMovement not found on {gameObject.name}");
+            return;
+        }
 
-        float distance = enemyMovement.GetDistanceToPlayer();
-        if (distance <= enemyMovement.GetComponent<EnemyMovement>().detectionRange)
+        if (enemyMovement.CanSeePlayer())
         {
             timer += Time.deltaTime;
             if (timer >= shootInterval)
@@ -28,6 +40,10 @@ public class ShootingBehavior : MonoBehaviour
                 timer = 0f;
                 Shoot();
             }
+        }
+        else
+        {
+            timer = 0f;
         }
     }
 
@@ -38,14 +54,30 @@ public class ShootingBehavior : MonoBehaviour
             currentBullet.SetActive(false);
         }
 
-        currentBullet = Instantiate(bulletPrefab, bulletPot.position, Quaternion.identity);
-        currentBullet.SetActive(true);
-
-        float direction = transform.localScale.x;
-        EnemyBulletScript enemyBullet = currentBullet.GetComponent<EnemyBulletScript>();
-        if (enemyBullet != null)
+        if (bulletPot != null && bulletPrefab != null)
         {
-            enemyBullet.Initialize(direction);
+            currentBullet = Instantiate(bulletPrefab, bulletPot.position, Quaternion.identity);
+            currentBullet.SetActive(true);
+
+            GameObject player = enemyMovement.GetPlayer();
+            if (player != null)
+            {
+                // Tính vector hướng từ enemy đến player
+                Vector2 directionToPlayer = (player.transform.position - bulletPot.position).normalized;
+                EnemyBulletScript enemyBullet = currentBullet.GetComponent<EnemyBulletScript>();
+                if (enemyBullet != null)
+                {
+                    enemyBullet.Initialize(directionToPlayer); // Truyền Vector2 thay vì float
+                }
+                else
+                {
+                    Debug.LogError("EnemyBulletScript not found on instantiated bullet!");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Player not found when shooting from {gameObject.name}");
+            }
         }
     }
 }

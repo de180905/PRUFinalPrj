@@ -15,6 +15,10 @@ GameObject:
   - component: {fileID: 8203585285087825051}
   - component: {fileID: 77498220018639976}
   - component: {fileID: 2901709502209793064}
+  - component: {fileID: 8242378657859548329}
+  - component: {fileID: 5510070174172842885}
+  - component: {fileID: 8933071544899429680}
+  - component: {fileID: 7744545899936827839}
   m_Layer: 8
   m_Name: Bee (Enemy)
   m_TagString: Enemy
@@ -129,7 +133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageOnPlayerCollision: 1
-  detectionRange: 5
+  detectionRange: 10
+  damage: 10
 --- !u!114 &8203585285087825051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3beaaa914dfd7645b0ecc623a04c5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPot: {fileID: 0}
+  bulletPot: {fileID: 9116753105874481375}
   bulletPrefab: {fileID: 3410468251216878022, guid: b78d5861fa0dd2f4db7c2eb4cf26747f, type: 3}
   shootInterval: 2
 --- !u!114 &2901709502209793064
@@ -171,6 +176,107 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57cbcf256a54cb48b7a5e6652a53376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8242378657859548329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783301949789233191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e895ee0ba9fba48a9b623d6de3761f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  detectionRange: 5
+--- !u!61 &5510070174172842885
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783301949789233191}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.125, y: 2.0625}
+    newSize: {x: 2.125, y: 2.0625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 2.125, y: 2.0625}
+  m_EdgeRadius: 0
+--- !u!50 &8933071544899429680
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783301949789233191}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &7744545899936827839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783301949789233191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e895ee0ba9fba48a9b623d6de3761f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  detectionRange: 5
 --- !u!1 &5045170707629189096
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +404,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3446804896367294160, guid: 0aca0c72e7c34e648ad98d41325e2ffb, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4378436396570637480, guid: 0aca0c72e7c34e648ad98d41325e2ffb, type: 3}
       propertyPath: m_Name
       value: EnemyHealthCanvas
@@ -317,9 +427,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4378436396570637480, guid: 0aca0c72e7c34e648ad98d41325e2ffb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3479091599643943168}
-    - targetCorrespondingSourceObject: {fileID: 4378436396570637480, guid: 0aca0c72e7c34e648ad98d41325e2ffb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2162635951014982097}
     - targetCorrespondingSourceObject: {fileID: 4378436396570637480, guid: 0aca0c72e7c34e648ad98d41325e2ffb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8171789533683894547}
@@ -347,28 +454,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5828136602094588758}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c700aa55817e61642ab4e4d851ae13da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damageOnPlayerCollision: 1
   detectionRange: 5
---- !u!114 &2162635951014982097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5828136602094588758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3beaaa914dfd7645b0ecc623a04c5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPot: {fileID: 0}
-  bulletPrefab: {fileID: 0}
-  shootInterval: 2
+  damage: 20
 --- !u!114 &8171789533683894547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +469,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5828136602094588758}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f57cbcf256a54cb48b7a5e6652a53376, type: 3}
   m_Name: 

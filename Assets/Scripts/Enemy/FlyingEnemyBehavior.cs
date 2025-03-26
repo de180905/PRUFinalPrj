@@ -19,7 +19,7 @@ public class FlyingEnemyBehavior : MonoBehaviour
         if (distance <= enemyMovement.GetComponent<EnemyMovement>().detectionRange)
         {
             // Lật mặt về phía player
-            enemyMovement.FacePlayer();
+            //enemyMovement.FacePlayer();
 
             // Bắn đạn nếu có ShootingBehavior
             if (shootingBehavior != null)

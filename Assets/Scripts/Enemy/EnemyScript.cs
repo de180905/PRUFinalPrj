@@ -14,7 +14,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float damage = 20f;
     public float GetDamage()
     {
-        return damage; // Phương thức để lấy giá trị sát thương
+        return damage;
     }
 
     protected virtual void Start()
@@ -30,32 +30,44 @@ public class EnemyScript : MonoBehaviour
         {
             healthSystem.OnDeath += OnDeath;
         }
+
+        if (enemyMovement != null)
+        {
+            enemyMovement.detectionRange = detectionRange;
+        }
     }
 
     protected virtual void Update()
     {
-        if (enemyMovement == null) return;
+        if (enemyMovement == null)
+        {
+            Debug.LogWarning($"EnemyMovement not found on {gameObject.name}");
+            return;
+        }
 
         float distance = enemyMovement.GetDistanceToPlayer();
         if (distance <= detectionRange)
         {
-            // Ưu tiên hành vi của FlyingEnemy nếu có
+            enemyMovement.FacePlayer();
             if (flyingEnemyBehavior != null)
             {
+                Debug.Log($"{gameObject.name} - Using FlyingEnemyBehavior");
                 flyingEnemyBehavior.HandleFlyingEnemy();
             }
-            // Nếu không, thực hiện hành vi bắn hoặc đuổi theo
             else if (shootingBehavior != null)
             {
+                Debug.Log($"{gameObject.name} - Using ShootingBehavior");
                 shootingBehavior.ShootIfDetected();
             }
             else if (chaseBehavior != null)
             {
+                Debug.Log($"{gameObject.name} - Using ChaseBehavior");
                 enemyMovement.UpdateMovement(chaseBehavior.Chase);
             }
         }
         else if (patrolBehavior != null)
         {
+            Debug.Log($"{gameObject.name} - Using PatrolBehavior");
             enemyMovement.UpdateMovement(patrolBehavior.Patrol);
         }
     }
