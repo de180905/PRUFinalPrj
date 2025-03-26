@@ -274,6 +274,8 @@ MonoBehaviour:
   deathKick: {x: 10, y: 10}
   bulletPrefab: {fileID: 9161722927733169467, guid: 57a24c7dafbe3dc4085d75a2bc7c642a, type: 3}
   gun: {fileID: 6117309012360519353}
+  healthSlider: {fileID: 4593329900051670155, guid: 6dbf37ef0899f314d9b0de67209ac8f1, type: 3}
+  maxHealth: 100
 --- !u!1001 &2875487009336879988
 PrefabInstance:
   m_ObjectHideFlags: 0

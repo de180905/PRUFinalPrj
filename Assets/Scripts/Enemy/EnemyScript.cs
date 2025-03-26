@@ -11,6 +11,12 @@ public class EnemyScript : MonoBehaviour
     private FlyingEnemyBehavior flyingEnemyBehavior;
     [SerializeField] float detectionRange = 5f;
 
+    [SerializeField] float damage = 20f;
+    public float GetDamage()
+    {
+        return damage; // Phương thức để lấy giá trị sát thương
+    }
+
     protected virtual void Start()
     {
         healthSystem = GetComponent<HealthSystem>();

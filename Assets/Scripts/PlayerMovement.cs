@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector2 deathKick = new Vector2(10f, 10f);
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform gun;
+
+    // Máu
+    [SerializeField] Slider healthSlider;
+    [SerializeField] float maxHealth = 100f; // Máu tối đa
+    private float currentHealth;
 
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
@@ -29,6 +33,17 @@ public class PlayerMovement : MonoBehaviour
         myFeetCollider = GetComponent<BoxCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
 
+        // Cấu hình Slider
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            currentHealth = maxHealth;// Đặt giá trị tối đa của Slider
+            healthSlider.value = currentHealth; // Đặt giá trị ban đầu
+        }
+        else
+        {
+            Debug.LogError("Health Slider is not assigned in PlayerMovement!");
+        }
         if (gun == null)
         {
             Debug.LogError("Gun Transform is not assigned in PlayerMovement!");
@@ -42,8 +57,42 @@ public class PlayerMovement : MonoBehaviour
         FlipSprite();
         ClimbLadder();
         Die();
+        UpdateHealthSlider();
     }
+    // Hàm hồi máu
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+        // Đảm bảo máu không vượt quá giới hạn tối đa
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        Debug.Log("Máu hiện tại: " + currentHealth);
+    }
+    // Cập nhật giá trị Slider
 
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            myAnimator.SetTrigger("Dying");
+            myRigidbody.linearVelocity = deathKick;
+            FindObjectOfType<GameSession>().ProcessPlayerDeath(); // Gọi khi máu về 0
+        }
+        Debug.Log($"Player health: {currentHealth}/{maxHealth}");
+        UpdateHealthSlider(); // Cập nhật Slider khi nhận sát thương
+    }
+    private void UpdateHealthSlider()
+    {
+        if (healthSlider != null)
+        {
+            Debug.Log($"CurrentHealth: {currentHealth}");
+            healthSlider.value = currentHealth; // Đồng bộ giá trị Slider với currentHealth
+        }
+    }
     void OnFire(InputValue value)
     {
         Debug.Log("Fire");
@@ -129,10 +178,28 @@ public class PlayerMovement : MonoBehaviour
         bool playerHasVerticalSpeed = Mathf.Abs(myRigidbody.linearVelocity.y) > Mathf.Epsilon;
         myAnimator.SetBool("isClimbing", playerHasVerticalSpeed);
     }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("va cham");
+        // Va chạm với Enemy dựa trên tag
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            EnemyScript enemy = other.gameObject.GetComponent<EnemyScript>();
+            if (enemy != null)
+            {
+                Debug.Log(enemy.GetDamage());
+                TakeDamage(enemy.GetDamage()); // Nhận sát thương từ enemy
+
+            }
+        }
+        // Va chạm với Hazard dựa trên tag
+
+    }
 
     void Die()
     {
-        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
+
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Hazards")))
         {
             isAlive = false;
             myAnimator.SetTrigger("Dying");

@@ -1,21 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Items : MonoBehaviour
 {
-    private Vector3 initialPosition; // Lưu vị trí ban đầu của giáp
+    public float healAmount = 20f; // Số lượng máu hồi phục
 
-    void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Lưu vị trí ban đầu khi đối tượng được tạo
-        initialPosition = transform.position;
-    }
+        Debug.Log("Hồi máu");
+        if (collision.CompareTag("Player"))
+        {
+            // Lấy script quản lý máu của Player
+            PlayerMovement playerHealth = collision.GetComponent<PlayerMovement>();
 
-    public void ResetItem()
-    {
-        // Đặt lại giáp về vị trí ban đầu và bật lại nếu bị ẩn
-        transform.position = initialPosition;
-        gameObject.SetActive(true);
+            // Nếu Player có script PlayerHealth, gọi hàm hồi máu
+            if (playerHealth != null)
+            {
+                playerHealth.Heal(healAmount);
+                Destroy(gameObject); // Xóa vật phẩm hồi máu sau khi sử dụng
+            }
+        }
     }
 }
