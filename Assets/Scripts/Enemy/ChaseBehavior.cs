@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChaseBehavior : MonoBehaviour
 {
@@ -15,7 +15,10 @@ public class ChaseBehavior : MonoBehaviour
         GameObject player = enemyMovement.GetPlayer();
         if (player != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            // Chỉ lấy tọa độ X của người chơi, giữ nguyên tọa độ Y của kẻ thù
+            Vector2 targetPosition = new Vector2(player.transform.position.x, transform.position.y);
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         }
     }
+
 }
