@@ -1,21 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Items : MonoBehaviour
 {
-    private Vector3 initialPosition; // Lưu vị trí ban đầu của giáp
+    [SerializeField] float healAmount = 50f; // Số lượng máu hồi phục
 
-    void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Lưu vị trí ban đầu khi đối tượng được tạo
-        initialPosition = transform.position;
-    }
+        Debug.Log("Trigger detected with: " + collision.gameObject.name);
+        if (collision.CompareTag("Player"))
+        {
+            // Lấy script HealthSystem của Player
+            HealthSystem playerHealth = collision.GetComponent<HealthSystem>();
 
-    public void ResetItem()
-    {
-        // Đặt lại giáp về vị trí ban đầu và bật lại nếu bị ẩn
-        transform.position = initialPosition;
-        gameObject.SetActive(true);
+            // Nếu Player có script HealthSystem, gọi hàm hồi máu
+            if (playerHealth != null)
+            {
+                playerHealth.Heal(healAmount);
+                Debug.Log($"Player collected item, healed for {healAmount}");
+                Destroy(gameObject); // Xóa vật phẩm hồi máu sau khi sử dụng
+            }
+            else
+            {
+                Debug.LogWarning("HealthSystem not found on Player: " + collision.gameObject.name);
+            }
+        }
     }
 }

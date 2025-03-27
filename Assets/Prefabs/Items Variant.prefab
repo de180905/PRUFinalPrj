@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3656617792995250240, guid: bf46f1ff012cc7845a72e8adc3eea6ab, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.436075
+      value: 4.576852
       objectReference: {fileID: 0}
     - target: {fileID: 3656617792995250240, guid: bf46f1ff012cc7845a72e8adc3eea6ab, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.440318
+      value: 4.2986774
       objectReference: {fileID: 0}
     - target: {fileID: 3656617792995250240, guid: bf46f1ff012cc7845a72e8adc3eea6ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -117,7 +117,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 23565949412127044ace543e892409b2, type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2229272705810654655, guid: bf46f1ff012cc7845a72e8adc3eea6ab, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6106228686579582207, guid: bf46f1ff012cc7845a72e8adc3eea6ab, type: 3}
@@ -141,3 +142,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1c6c62a38d44544b9cafaf67b2af80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healAmount: 20

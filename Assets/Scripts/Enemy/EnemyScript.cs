@@ -1,99 +1,96 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+
 public class EnemyScript : MonoBehaviour
 {
-    //thanh mau
-    public float maxHealth;
-    float currentHealth;
-    public Slider healthSlider;
+    [SerializeField] float damageOnPlayerCollision = 1f;
+    private HealthSystem healthSystem;
+    private EnemyMovement enemyMovement;
+    private PatrolBehavior patrolBehavior;
+    private ChaseBehavior chaseBehavior;
+    private ShootingBehavior shootingBehavior;
+    private FlyingEnemyBehavior flyingEnemyBehavior;
+    [SerializeField] float detectionRange = 5f;
 
-    protected GameObject player;
-    protected SpriteRenderer spriteRenderer;
-    public float detectionRange = 5f;
-    protected Vector3 startPot;
-    public bool moveRight = true;
-    [SerializeField] public float speed = 1f;
-    private Vector3 lastPosition; // Theo dõi vị trí trước đó
-    private float minMoveDistance = 0.1f; // Ngưỡng tối thiểu để lật
+    [SerializeField] float damage = 20f;
+    public float GetDamage()
+    {
+        return damage;
+    }
 
     protected virtual void Start()
     {
-        //thanh mau
-        currentHealth = maxHealth;
-        if (healthSlider == null)
-        {
-            healthSlider = GetComponentInChildren<Slider>();
-        }
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = maxHealth;
+        healthSystem = GetComponent<HealthSystem>();
+        enemyMovement = GetComponent<EnemyMovement>();
+        patrolBehavior = GetComponent<PatrolBehavior>();
+        chaseBehavior = GetComponent<ChaseBehavior>();
+        shootingBehavior = GetComponent<ShootingBehavior>();
+        flyingEnemyBehavior = GetComponent<FlyingEnemyBehavior>();
 
-        player = GameObject.FindGameObjectWithTag("Player");
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        startPot = transform.position;
-        lastPosition = transform.position; // Khởi tạo vị trí ban đầu
+        if (healthSystem != null)
+        {
+            healthSystem.OnDeath += OnDeath;
+        }
 
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("va cham");
-        if(collision.gameObject.tag == "Player")
+        if (enemyMovement != null)
         {
-            AddDamge(1);
+            enemyMovement.detectionRange = detectionRange;
         }
     }
-    //add damge
-    public void AddDamge(float damge)
-    {
-        currentHealth -= damge;
-        healthSlider.value = currentHealth;
-        if(currentHealth <= 0)
-        {
-            Destroy(this.gameObject);
-        }
-    }
+
     protected virtual void Update()
     {
-        if (player == null) return;
+        if (enemyMovement == null)
+        {
+            Debug.LogWarning($"EnemyMovement not found on {gameObject.name}");
+            return;
+        }
 
-        float distance = Vector2.Distance(transform.position, player.transform.position);
+        float distance = enemyMovement.GetDistanceToPlayer();
         if (distance <= detectionRange)
         {
-            OnPlayerDetected();
+            enemyMovement.FacePlayer();
+            if (flyingEnemyBehavior != null)
+            {
+                Debug.Log($"{gameObject.name} - Using FlyingEnemyBehavior");
+                flyingEnemyBehavior.HandleFlyingEnemy();
+            }
+            else if (shootingBehavior != null)
+            {
+                Debug.Log($"{gameObject.name} - Using ShootingBehavior");
+                shootingBehavior.ShootIfDetected();
+            }
+            else if (chaseBehavior != null)
+            {
+                Debug.Log($"{gameObject.name} - Using ChaseBehavior");
+                enemyMovement.UpdateMovement(chaseBehavior.Chase);
+            }
         }
-        else
+        else if (patrolBehavior != null)
         {
-            Patrol();
+            Debug.Log($"{gameObject.name} - Using PatrolBehavior");
+            enemyMovement.UpdateMovement(patrolBehavior.Patrol);
         }
-        // Tính hướng di chuyển của enemy
-        Vector2 movementDirection = (transform.position - lastPosition).normalized;
-        if (movementDirection.magnitude > minMoveDistance) // Chỉ lật khi di chuyển đủ xa
-        {
-            FlipBasedOnMovement(movementDirection);
-        }
-        lastPosition = transform.position; // Cập nhật vị trí cuối cùng
     }
 
-    
-    // Hàm lật dựa trên hướng di chuyển
-    protected void FlipBasedOnMovement(Vector2 direction)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (direction.x < 0 && transform.localScale.x < 0) // Sang trái, sprite hướng trái -> lật sang phải
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Flip();
-        }
-        else if (direction.x > 0 && transform.localScale.x > 0) // Sang phải, sprite hướng phải -> lật sang trái
-        {
-            Flip();
+            HealthSystem playerHealth = collision.gameObject.GetComponent<HealthSystem>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damageOnPlayerCollision);
+            }
+
+            if (healthSystem != null)
+            {
+                healthSystem.TakeDamage(damageOnPlayerCollision);
+            }
         }
     }
 
-    protected void Flip()
+    protected virtual void OnDeath()
     {
-        Vector3 scaler = transform.localScale;
-        scaler.x *= -1;
-        transform.localScale = scaler;
+        // Có thể thêm logic khi chết
     }
-
-    protected virtual void OnPlayerDetected() { }
-    protected virtual void Patrol() { }
 }
