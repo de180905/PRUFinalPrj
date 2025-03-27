@@ -39813,9 +39813,6 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8974908085180303900, guid: cabdbd0ec5c6c8e448d08601005ed95e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1562633197}
-    - targetCorrespondingSourceObject: {fileID: 8974908085180303900, guid: cabdbd0ec5c6c8e448d08601005ed95e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1764051187}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cabdbd0ec5c6c8e448d08601005ed95e, type: 3}
@@ -40763,7 +40760,7 @@ Transform:
   - {fileID: 70005931}
   - {fileID: 1444311388}
   - {fileID: 915476613}
-  m_Father: {fileID: 1123453834}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1578423483 stripped
 Transform:
@@ -41873,3 +41870,4 @@ SceneRoots:
   - {fileID: 1611129487}
   - {fileID: 4852759751308671804}
   - {fileID: 1589375464147348154}
+  - {fileID: 1562633197}
